@@ -1,0 +1,37 @@
+<div class="container">
+  <div class="col-md-12">
+      <form (ngSubmit)="onSignin(f)" #f="ngForm" class="sign">
+          <div class="login">
+              <div class="login-screen">
+                  <div class="app-title">
+                      <h1> Login  </h1>
+                  </div>
+      
+                  <div class="login-form">
+                      <div class="control-group">
+                          <input type="text" class="login-field"  placeholder="username" ngModel name="UserName" required>
+                          <span><i class="fa fa-user"></i></span>
+      
+                          <label class="login-field-icon fui-user" for="login-name">
+                              <span style="color: red"> * </span>
+                          </label>          
+                      </div>
+      
+      
+                      <div class="control-group">
+                          <input type="password" class=" login-field" placeholder="password" ngModel name="Password" required>
+                          <span><i class="fa fa-lock" ></i></span>
+                          <label class="login-field-icon fui-lock" for="login-pass">
+                              <span style="color: red"> * </span>
+                          </label>
+                      </div>
+      
+                      <button class="btn-primary btn-large btn-block" [disabled]="!f.valid" (click)="onSignin(f)" >Login &nbsp;
+                          <i class="fa fa-sign-in" ></i>
+                      </button>
+                  </div>
+              </div>
+          </div>
+      </form>
+  </div>
+</div>
