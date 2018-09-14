@@ -1,0 +1,638 @@
+﻿@using RedHawk.Model.InboundModel
+@model InboundModel
+@{
+    Html.EnableClientValidation();
+}
+@using (Html.BeginForm("UpdatedInboundXMl", "Home", FormMethod.Post, new { @class = "TabPartial" }))
+{
+    @Html.AntiForgeryToken()
+
+    @*@Html.EditorForModel()*@
+
+    <table class="ui-tabs-collapsible">
+        <tr>
+           <th>
+                <div id="Processing Status">
+                    <label>Processing Status</label>
+                    @Html.DropDownListFor(x => x.ProcessingStatus, new SelectList(ViewBag.Status))
+                </div>
+            </th>
+            <td>
+                <div id="CEAXmlID">
+                    <label>CeaXmlId</label>
+                    @Html.HiddenFor(x => x.CeaXmlId)
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div id="Transactions">
+                    @Html.EditorFor(x => x.InboundXml.Transactions)
+                </div>
+            </td>
+        </tr>
+        @switch (Model.TransactionType)
+        {
+            case "new_business":
+                {
+                    <tr>
+                        <td>
+                            <div id="Transaction Type">
+                                <label> Transaction Type</label>
+                                @Html.EditorFor(x => x.InboundXml.Transactions.New_business)
+                            </div>
+
+                        </td>
+                        <td>
+                            <div id="Policy">
+                                <label>Policy</label>
+                                <br />
+                                @Html.EditorFor(x => x.InboundXml.Transactions.New_business.Policy)
+                            </div>
+                        </td>
+                        <td>
+                            <div id="PolicyHolder">
+                                <label>PolicyHolder</label>
+                                <br />
+                                @Html.EditorFor(x => x.InboundXml.Transactions.New_business.Policy.Policy_holder)
+                            </div>
+                        </td>
+                        <td>
+                            <div id="CoPolicyHolder">
+                                <label>CoPolicyHolder</label>
+
+                                <br />
+                                @Html.EditorFor(x => x.InboundXml.Transactions.New_business.Policy.Co_policy_holder)
+                            </div>
+                        </td>
+                        <td>
+                            <div id="Mailing Address">
+                                <label>Mailing Address</label>
+
+                                <br />
+                                @Html.EditorFor(x => x.InboundXml.Transactions.New_business.Policy.Policy_holder_mailing_address)
+                            </div>
+                        </td>
+                        <td>
+                            <div id="Risk Address">
+                                <label>Risk Address</label>
+                                <br />
+                                @Html.EditorFor(x => x.InboundXml.Transactions.New_business.Policy.Risk_address)
+                            </div>
+                        </td>
+
+                        <td>
+                            <div id="Coverage_limits">
+                                <label>Coverage_limits</label>
+                                <br />
+                                @Html.EditorFor(x => x.InboundXml.Transactions.New_business.Policy.Coverage_limits)
+                            </div>
+                        </td>
+                        <td>
+                            <div id="Agency">
+                                <label>Agency</label>
+                                <br />
+                                @Html.EditorFor(x => x.InboundXml.Transactions.New_business.Policy.Agency)
+                            </div>
+                        </td>
+                        <td>
+                            <div id="Rating factors">
+                                <label>Rating factors</label>
+                                <br />
+                                @if (!string.IsNullOrEmpty(Model.InboundXml.Transactions.New_business.Policy.Companion_policy_type.ToString()))
+                                {
+                                    if (Model.InboundXml.Transactions.New_business.Policy.Companion_policy_type.ToString() == "Homeowners")
+                                    {
+                                    @Html.EditorFor(x => x.InboundXml.Transactions.New_business.Policy.Rating_factors.Homeowners)
+                                    }
+                                    else
+                                if (Model.InboundXml.Transactions.New_business.Policy.Companion_policy_type.ToString() == "Condominium")
+                                    {
+                                    @Html.EditorFor(x => x.InboundXml.Transactions.New_business.Policy.Rating_factors.Condominium)
+                                    }
+                                    else
+                                if (Model.InboundXml.Transactions.New_business.Policy.Companion_policy_type.ToString() == "Manufactured Mobile")
+                                    {
+                                    @Html.EditorFor(x => x.InboundXml.Transactions.New_business.Policy.Rating_factors.Manufactured_mobile)
+                                    }
+                                    else
+                                if (Model.InboundXml.Transactions.New_business.Policy.Companion_policy_type.ToString() == "Renters Tenant")
+                                    {
+                                    @Html.EditorFor(x => x.InboundXml.Transactions.New_business.Policy.Rating_factors.Renters)
+                                    }
+                                }
+                            </div>
+                        </td>
+                    </tr>
+                }
+                break;
+            case "renewal":
+                {
+                    <tr>
+                        <td>
+                            <div id="Transaction Type">
+                                <label> Transaction Type</label>
+                                @Html.EditorFor(x => x.InboundXml.Transactions.Renewal)
+                            </div>
+
+                        </td>
+                        <td>
+                            <div id="Policy">
+                                <label>Policy</label>
+                                <br />
+                                @Html.EditorFor(x => x.InboundXml.Transactions.Renewal.Policy)
+                            </div>
+                        </td>
+                        <td>
+                            <div id="PolicyHolder">
+                                <label>PolicyHolder</label>
+                                <br />
+                                @Html.EditorFor(x => x.InboundXml.Transactions.Renewal.Policy.Policy_holder)
+                            </div>
+                        </td>
+                        <td>
+                            <div id="CoPolicyHolder">
+                                <label>CoPolicyHolder</label>
+
+                                <br />
+                                @Html.EditorFor(x => x.InboundXml.Transactions.Renewal.Policy.Co_policy_holder)
+                            </div>
+                        </td>
+                        <td>
+                            <div id="Mailing Address">
+                                <label>Mailing Address</label>
+
+                                <br />
+                                @Html.EditorFor(x => x.InboundXml.Transactions.Renewal.Policy.Policy_holder_mailing_address)
+                            </div>
+                        </td>
+                        <td>
+                            <div id="Risk Address">
+                                <label>Risk Address</label>
+                                <br />
+                                @Html.EditorFor(x => x.InboundXml.Transactions.Renewal.Policy.Risk_address)
+                            </div>
+                        </td>
+
+                        <td>
+                            <div id="Coverage_limits">
+                                <label>Coverage_limits</label>
+                                <br />
+                                @Html.EditorFor(x => x.InboundXml.Transactions.Renewal.Policy.Coverage_limits)
+                            </div>
+                        </td>
+                        <td>
+                            <div id="Agency">
+                                <label>Agency</label>
+                                <br />
+                                @Html.EditorFor(x => x.InboundXml.Transactions.Renewal.Policy.Agency)
+                            </div>
+                        </td>
+                        <td>
+                            <div id="Rating factors">
+                                <label>Rating factors</label>
+                                <br />
+                                @if (Model.InboundXml.Transactions.Renewal.Policy.Companion_policy_type == "Homeowners")
+                                {
+                                    @Html.EditorFor(x => x.InboundXml.Transactions.Renewal.Policy.Rating_factors.Homeowners)
+                                }
+                                else
+                                if (Model.InboundXml.Transactions.Renewal.Policy.Companion_policy_type == "Condominium")
+                                {
+                                    @Html.EditorFor(x => x.InboundXml.Transactions.Renewal.Policy.Rating_factors.Condominium)
+                                }
+                                else
+                                if (Model.InboundXml.Transactions.Renewal.Policy.Companion_policy_type == "Manufactured Mobile")
+                                {
+                                    @Html.EditorFor(x => x.InboundXml.Transactions.Renewal.Policy.Rating_factors.Manufactured_mobile)
+                                }
+                                else
+                                if (Model.InboundXml.Transactions.Renewal.Policy.Companion_policy_type == "Renters Tenant")
+                                {
+                                    @Html.EditorFor(x => x.InboundXml.Transactions.Renewal.Policy.Rating_factors.Renters)
+                                }
+                            </div>
+                        </td>
+                    </tr>
+                }
+                break;
+            case "reissue":
+                {
+                    <tr>
+                        <td>
+                            <div id="Transaction Type">
+                                <label> Transaction Type</label>
+                                @Html.EditorFor(x => x.InboundXml.Transactions.Reissue)
+                            </div>
+
+                        </td>
+                        <td>
+                            <div id="Policy">
+                                <label>Policy</label>
+                                <br />
+                                @Html.EditorFor(x => x.InboundXml.Transactions.Reissue.Policy)
+                            </div>
+                        </td>
+                        <td>
+                            <div id="PolicyHolder">
+                                <label>PolicyHolder</label>
+                                <br />
+                                @Html.EditorFor(x => x.InboundXml.Transactions.Reissue.Policy.Policy_holder)
+                            </div>
+                        </td>
+                        <td>
+                            <div id="CoPolicyHolder">
+                                <label>CoPolicyHolder</label>
+
+                                <br />
+                                @Html.EditorFor(x => x.InboundXml.Transactions.Reissue.Policy.Co_policy_holder)
+                            </div>
+                        </td>
+                        <td>
+                            <div id="Mailing Address">
+                                <label>Mailing Address</label>
+
+                                <br />
+                                @Html.EditorFor(x => x.InboundXml.Transactions.Reissue.Policy.Policy_holder_mailing_address)
+                            </div>
+                        </td>
+                        <td>
+                            <div id="Risk Address">
+                                <label>Risk Address</label>
+                                <br />
+                                @Html.EditorFor(x => x.InboundXml.Transactions.Reissue.Policy.Risk_address)
+                            </div>
+                        </td>
+
+                        <td>
+                            <div id="Coverage_limits">
+                                <label>Coverage_limits</label>
+                                <br />
+                                @Html.EditorFor(x => x.InboundXml.Transactions.Reissue.Policy.Coverage_limits)
+                            </div>
+                        </td>
+                        <td>
+                            <div id="Agency">
+                                <label>Agency</label>
+                                <br />
+                                @Html.EditorFor(x => x.InboundXml.Transactions.Reissue.Policy.Agency)
+                            </div>
+                        </td>
+                        <td>
+                            <div id="Rating factors">
+                                <label>Rating factors</label>
+                                <br />
+                                @if (Model.InboundXml.Transactions.Reissue.Policy.Companion_policy_type == "Homeowners")
+                                {
+                                    @Html.EditorFor(x => x.InboundXml.Transactions.Reissue.Policy.Rating_factors.Homeowners)
+                                }
+                                else
+                                if (Model.InboundXml.Transactions.Reissue.Policy.Companion_policy_type == "Condominium")
+                                {
+                                    @Html.EditorFor(x => x.InboundXml.Transactions.Reissue.Policy.Rating_factors.Condominium)
+                                }
+                                else
+                                if (Model.InboundXml.Transactions.Reissue.Policy.Companion_policy_type == "Manufactured Mobile")
+                                {
+                                    @Html.EditorFor(x => x.InboundXml.Transactions.Reissue.Policy.Rating_factors.Manufactured_mobile)
+                                }
+                                else
+                                if (Model.InboundXml.Transactions.Reissue.Policy.Companion_policy_type == "Renters Tenant")
+                                {
+                                    @Html.EditorFor(x => x.InboundXml.Transactions.Reissue.Policy.Rating_factors.Renters)
+                                }
+                            </div>
+                        </td>
+                    </tr>
+                }
+                break;
+            case "reinstatement":
+                {
+                    <tr>
+                        <td>
+                            <div id="Transaction Type">
+                                <label> Transaction Type</label>
+                                @Html.EditorFor(x => x.InboundXml.Transactions.Reinstatement)
+                            </div>
+
+                        </td>
+                        <td>
+                            <div id="Policy">
+                                <label>Policy</label>
+                                <br />
+                                @Html.EditorFor(x => x.InboundXml.Transactions.Reinstatement.Policy)
+                            </div>
+                        </td>
+                        <td>
+                            <div id="PolicyHolder">
+                                <label>PolicyHolder</label>
+                                <br />
+                                @Html.EditorFor(x => x.InboundXml.Transactions.Reinstatement.Policy.Policy_holder)
+                            </div>
+                        </td>
+                        <td>
+                            <div id="CoPolicyHolder">
+                                <label>CoPolicyHolder</label>
+
+                                <br />
+                                @Html.EditorFor(x => x.InboundXml.Transactions.Reinstatement.Policy.Co_policy_holder)
+                            </div>
+                        </td>
+                        <td>
+                            <div id="Mailing Address">
+                                <label>Mailing Address</label>
+
+                                <br />
+                                @Html.EditorFor(x => x.InboundXml.Transactions.Reinstatement.Policy.Policy_holder_mailing_address)
+                            </div>
+                        </td>
+                        <td>
+                            <div id="Risk Address">
+                                <label>Risk Address</label>
+                                <br />
+                                @Html.EditorFor(x => x.InboundXml.Transactions.Reinstatement.Policy.Risk_address)
+                            </div>
+                        </td>
+
+                        <td>
+                            <div id="Coverage_limits">
+                                <label>Coverage_limits</label>
+                                <br />
+                                @Html.EditorFor(x => x.InboundXml.Transactions.Reinstatement.Policy.Coverage_limits)
+                            </div>
+                        </td>
+                        <td>
+                            <div id="Agency">
+                                <label>Agency</label>
+                                <br />
+                                @Html.EditorFor(x => x.InboundXml.Transactions.Reinstatement.Policy.Agency)
+                            </div>
+                        </td>
+                        <td>
+                            <div id="Rating factors">
+                                <label>Rating factors</label>
+                                <br />
+                                @if (Model.InboundXml.Transactions.Reinstatement.Policy.Companion_policy_type == "Homeowners")
+                                {
+                                    @Html.EditorFor(x => x.InboundXml.Transactions.Reinstatement.Policy.Rating_factors.Homeowners)
+                                }
+                                else
+                                if (Model.InboundXml.Transactions.Reinstatement.Policy.Companion_policy_type == "Condominium")
+                                {
+                                    @Html.EditorFor(x => x.InboundXml.Transactions.Reinstatement.Policy.Rating_factors.Condominium)
+                                }
+                                else
+                                if (Model.InboundXml.Transactions.Reinstatement.Policy.Companion_policy_type == "Manufactured Mobile")
+                                {
+                                    @Html.EditorFor(x => x.InboundXml.Transactions.Reinstatement.Policy.Rating_factors.Manufactured_mobile)
+                                }
+                                else
+                                if (Model.InboundXml.Transactions.Reinstatement.Policy.Companion_policy_type == "Renters Tenant")
+                                {
+                                    @Html.EditorFor(x => x.InboundXml.Transactions.Reinstatement.Policy.Rating_factors.Renters)
+                                }
+                            </div>
+                        </td>
+                    </tr>
+                }
+                break;
+            case "policy_cancellation":
+                {
+                    <tr>
+                        <td>
+                            <div id="Transaction Type">
+                                <label> Transaction Type</label>
+                                @Html.EditorFor(x => x.InboundXml.Transactions.PolicyCancellation)
+                            </div>
+
+                        </td>
+                        <td>
+                            <div id="Policy">
+                                <label>Policy</label>
+                                <br />
+                                @Html.EditorFor(x => x.InboundXml.Transactions.PolicyCancellation.Policy)
+                            </div>
+                        </td>
+                        <td>
+                            <div id="PolicyHolder">
+                                <label>PolicyHolder</label>
+                                <br />
+                                @Html.EditorFor(x => x.InboundXml.Transactions.PolicyCancellation.Policy.Policy_holder)
+                            </div>
+                        </td>
+                        <td>
+                            <div id="CoPolicyHolder">
+                                <label>CoPolicyHolder</label>
+
+                                <br />
+                                @Html.EditorFor(x => x.InboundXml.Transactions.PolicyCancellation.Policy.Co_policy_holder)
+                            </div>
+                        </td>
+                        <td>
+                            <div id="Mailing Address">
+                                <label>Mailing Address</label>
+
+                                <br />
+                                @Html.EditorFor(x => x.InboundXml.Transactions.PolicyCancellation.Policy.Policy_holder_mailing_address)
+                            </div>
+                        </td>
+                        <td>
+                            <div id="Risk Address">
+                                <label>Risk Address</label>
+                                <br />
+                                @Html.EditorFor(x => x.InboundXml.Transactions.PolicyCancellation.Policy.Risk_address)
+                            </div>
+                        </td>
+
+                        <td>
+                            <div id="Coverage_limits">
+                                <label>Coverage_limits</label>
+                                <br />
+                                @Html.EditorFor(x => x.InboundXml.Transactions.PolicyCancellation.Policy.Coverage_limits)
+                            </div>
+                        </td>
+                        <td>
+                            <div id="Agency">
+                                <label>Agency</label>
+                                <br />
+                                @Html.EditorFor(x => x.InboundXml.Transactions.PolicyCancellation.Policy.Agency)
+                            </div>
+                        </td>
+                        <td>
+                            <div id="Rating factors">
+                                <label>Rating factors</label>
+                                <br />
+                                @if (Model.InboundXml.Transactions.PolicyCancellation.Policy.Companion_policy_type == "Homeowners")
+                                {
+                                    @Html.EditorFor(x => x.InboundXml.Transactions.PolicyCancellation.Policy.Rating_factors.Homeowners)
+                                }
+                                else
+                                if (Model.InboundXml.Transactions.PolicyCancellation.Policy.Companion_policy_type == "Condominium")
+                                {
+                                    @Html.EditorFor(x => x.InboundXml.Transactions.PolicyCancellation.Policy.Rating_factors.Condominium)
+                                }
+                                else
+                                if (Model.InboundXml.Transactions.PolicyCancellation.Policy.Companion_policy_type == "Manufactured Mobile")
+                                {
+                                    @Html.EditorFor(x => x.InboundXml.Transactions.PolicyCancellation.Policy.Rating_factors.Manufactured_mobile)
+                                }
+                                else
+                                if (Model.InboundXml.Transactions.PolicyCancellation.Policy.Companion_policy_type == "Renters Tenant")
+                                {
+                                    @Html.EditorFor(x => x.InboundXml.Transactions.PolicyCancellation.Policy.Rating_factors.Renters)
+                                }
+                            </div>
+                        </td>
+                    </tr>
+                }
+                break;
+            case "endorsement":
+                {
+                    <tr>
+                        <td>
+                            <div id="Transaction Type">
+                                <label> Transaction Type</label>
+                                @Html.EditorFor(x => x.InboundXml.Transactions.Endorsement)
+                            </div>
+
+                        </td>
+                        <td>
+                            <div id="Policy">
+                                <label>Policy</label>
+                                <br />
+                                @Html.EditorFor(x => x.InboundXml.Transactions.Endorsement.Policy)
+                            </div>
+                        </td>
+                        <td>
+                            <div id="PolicyHolder">
+                                <label>PolicyHolder</label>
+                                <br />
+                                @Html.EditorFor(x => x.InboundXml.Transactions.Endorsement.Policy.Policy_holder)
+                            </div>
+                        </td>
+                        <td>
+                            <div id="CoPolicyHolder">
+                                <label>CoPolicyHolder</label>
+
+                                <br />
+                                @Html.EditorFor(x => x.InboundXml.Transactions.Endorsement.Policy.Co_policy_holder)
+                            </div>
+                        </td>
+                        <td>
+                            <div id="Mailing Address">
+                                <label>Mailing Address</label>
+
+                                <br />
+                                @Html.EditorFor(x => x.InboundXml.Transactions.Endorsement.Policy.Policy_holder_mailing_address)
+                            </div>
+                        </td>
+                        <td>
+                            <div id="Risk Address">
+                                <label>Risk Address</label>
+                                <br />
+                                @Html.EditorFor(x => x.InboundXml.Transactions.Endorsement.Policy.Risk_address)
+                            </div>
+                        </td>
+
+                        <td>
+                            <div id="Coverage_limits">
+                                <label>Coverage_limits</label>
+                                <br />
+                                @Html.EditorFor(x => x.InboundXml.Transactions.Endorsement.Policy.Coverage_limits)
+                            </div>
+                        </td>
+                        <td>
+                            <div id="Agency">
+                                <label>Agency</label>
+                                <br />
+                                @Html.EditorFor(x => x.InboundXml.Transactions.Endorsement.Policy.Agency)
+                            </div>
+                        </td>
+                        <td>
+                            <div id="Rating factors">
+                                <label>Rating factors</label>
+                                <br />
+                                @if (Model.InboundXml.Transactions.Endorsement.Policy.Companion_policy_type == "Homeowners")
+                                {
+                                    @Html.EditorFor(x => x.InboundXml.Transactions.Endorsement.Policy.Rating_factors.Homeowners)
+                                }
+                                else
+                                if (Model.InboundXml.Transactions.Endorsement.Policy.Companion_policy_type == "Condominium")
+                                {
+                                    @Html.EditorFor(x => x.InboundXml.Transactions.Endorsement.Policy.Rating_factors.Condominium)
+                                }
+                                else
+                                if (Model.InboundXml.Transactions.Endorsement.Policy.Companion_policy_type == "Manufactured Mobile")
+                                {
+                                    @Html.EditorFor(x => x.InboundXml.Transactions.Endorsement.Policy.Rating_factors.Manufactured_mobile)
+                                }
+                                else
+                                if (Model.InboundXml.Transactions.Endorsement.Policy.Companion_policy_type == "Renters Tenant")
+                                {
+                                    @Html.EditorFor(x => x.InboundXml.Transactions.Endorsement.Policy.Rating_factors.Renters)
+                                }
+                            </div>
+                        </td>
+                    </tr>
+                }
+                break;
+            default:
+                break;
+        }
+
+    </table>
+    <p>
+        <button id="btnProceed" class="btn btn-primary" type="submit" data-bind="click: UpdatedInboundXMl" value="submit">Submit</button>
+    </p>
+}
+@*@using (Html.BeginForm("ExternalEditFormEdit", "Home", FormMethod.Post, new { @class = "TabPartial" }))
+    {
+
+        @Html.Hidden("CEAXMLId")
+        <div class="line">
+            @Html.DevExpress().Label(
+                settings =>
+                {
+                    settings.ControlStyle.CssClass = "label";
+                    settings.Text = "TransctionType:" + Model.TransactionType;
+
+                }
+         ).Bind(Model.TransactionType).GetHtml()
+        </div>
+        <div class="line">
+            @Html.DevExpress().Label(
+                settings =>
+                {
+                    settings.ControlStyle.CssClass = "label";
+                    settings.Text = "CompanionPolicyName:";
+                }
+            ).GetHtml()
+            @Html.DevExpress().TextBox(
+             settings =>
+             {
+                 settings.Name = Model.CompanionPolicyNumber;
+                 settings.ControlStyle.CssClass = "editor";
+             }
+         ).Bind(Model.CompanionPolicyNumber).GetHtml()
+        </div>
+        <div class="line">
+            @Html.DevExpress().Label(
+                settings =>
+                {
+                    settings.ControlStyle.CssClass = "label";
+                    settings.Text = "Policy Number:";
+                }
+            ).GetHtml()
+            @Html.DevExpress().TextBox(
+             settings =>
+             {
+                 if(Model.PolicyNumber!=null)
+                     settings.Name = Model.PolicyNumber;
+                 else
+                     settings.Name = "0";
+
+             }
+         ).Bind(Model.PolicyNumber).GetHtml()
+        </div>
+
+    }*@

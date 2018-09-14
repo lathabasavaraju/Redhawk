@@ -1,0 +1,12 @@
+@if(!Convert.ToBoolean(TempData["IsValidLogin"].ToString())) {
+    @*@Html.ActionLink("Register", "Register", "Account")*@ 
+    @: | 
+    @Html.ActionLink("Login", "Login", "Account")
+}
+else {
+ 
+    @: Welcome @Html.ActionLink(TempData["Username"].ToString() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
+ 
+    @: |
+    @Html.ActionLink("Logout", "LogOff", "Account")
+}

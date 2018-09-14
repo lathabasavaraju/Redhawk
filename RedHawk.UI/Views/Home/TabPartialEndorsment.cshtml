@@ -1,0 +1,147 @@
+﻿@using RedHawk.Model.InboundModel
+@model InboundModel
+@{
+    Html.EnableClientValidation();
+}
+@using (Html.BeginForm("UpdatedInboundXMl", "Home", FormMethod.Post, new { @class = "TabPartialEndorsment" }))
+{
+    @Html.AntiForgeryToken()
+
+    @*@Html.EditorForModel()*@
+    <table class="ui-tabs-collapsible">
+        <tr>
+            <td>
+                <div id="CEAXMLID">
+                    @Html.EditorFor(x => x.CeaXmlId)
+                </div>
+            </td>
+            <td>
+                <div id="Transactions">
+                    @Html.EditorFor(x => x.InboundXml.Transactions)
+                </div>
+                <div id="Transaction Type" >
+                    <label> Transaction Type</label>
+                    @Html.EditorFor(x => x.InboundXml.Transactions.Endorsement)
+                </div>
+            </td>
+        </tr>
+        <tr></tr>
+        <tr>
+            <td>
+                <div id="Policy">
+                    <label>Policy</label>
+                    <br />
+                    @Html.EditorFor(x => x.InboundXml.Transactions.Endorsement.Policy)
+                </div>
+            </td>
+            <td>
+                <div id="PolicyHolder">
+                    <label>PolicyHolder</label>
+                    <br />
+                    @Html.EditorFor(x => x.InboundXml.Transactions.Endorsement.Policy.Policy_holder)
+                </div>
+            </td>
+            <td>
+                <div id="CoPolicyHolder">
+                    <label>CoPolicyHolder</label>
+
+                    <br />
+                    @Html.EditorFor(x => x.InboundXml.Transactions.Endorsement.Policy.Co_policy_holder)
+                </div>
+            </td>
+            <td>
+                <div id="Mailing Address">
+                    <label>Mailing Address</label>
+
+                    <br />
+                    @Html.EditorFor(x => x.InboundXml.Transactions.Endorsement.Policy.Policy_holder_mailing_address)
+                </div>
+            </td>
+            <td>
+                <div id="Risk Address">
+                    <label>Risk Address</label>
+                    <br />
+                    @Html.EditorFor(x => x.InboundXml.Transactions.Endorsement.Policy.Risk_address)
+                </div>
+            </td>
+
+            <td>
+                <div id="Coverage_limits">
+                    <label>Coverage_limits</label>
+                    <br />
+                    @Html.EditorFor(x => x.InboundXml.Transactions.Endorsement.Policy.Coverage_limits)
+                </div>
+            </td>
+            <td>
+                <div id="Agency">
+                    <label>Agency</label>
+                    <br />
+                    @Html.EditorFor(x => x.InboundXml.Transactions.Endorsement.Policy.Agency)
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div id="Rating factors">
+                    <label>Rating factors</label>
+                    <br />
+                    @Html.EditorFor(x => x.InboundXml.Transactions.Endorsement.Policy.Rating_factors.Homeowners)
+                </div>
+            </td>
+        </tr>
+    </table>
+    <p>
+        <button id="btnProceed" class="btn btn-primary" type="submit" data-bind ="click: UpdatedInboundXMl"  value="submit">Submit</button>
+    </p>
+}
+@*@using (Html.BeginForm("ExternalEditFormEdit", "Home", FormMethod.Post, new { @class = "TabPartial" }))
+    {
+
+        @Html.Hidden("CEAXMLId")
+        <div class="line">
+            @Html.DevExpress().Label(
+                settings =>
+                {
+                    settings.ControlStyle.CssClass = "label";
+                    settings.Text = "TransctionType:" + Model.TransactionType;
+
+                }
+         ).Bind(Model.TransactionType).GetHtml()
+        </div>
+        <div class="line">
+            @Html.DevExpress().Label(
+                settings =>
+                {
+                    settings.ControlStyle.CssClass = "label";
+                    settings.Text = "CompanionPolicyName:";
+                }
+            ).GetHtml()
+            @Html.DevExpress().TextBox(
+             settings =>
+             {
+                 settings.Name = Model.CompanionPolicyNumber;
+                 settings.ControlStyle.CssClass = "editor";
+             }
+         ).Bind(Model.CompanionPolicyNumber).GetHtml()
+        </div>
+        <div class="line">
+            @Html.DevExpress().Label(
+                settings =>
+                {
+                    settings.ControlStyle.CssClass = "label";
+                    settings.Text = "Policy Number:";
+                }
+            ).GetHtml()
+            @Html.DevExpress().TextBox(
+             settings =>
+             {
+                 if(Model.PolicyNumber!=null)
+                     settings.Name = Model.PolicyNumber;
+                 else
+                     settings.Name = "0";
+
+             }
+         ).Bind(Model.PolicyNumber).GetHtml()
+        </div>
+
+    }*@

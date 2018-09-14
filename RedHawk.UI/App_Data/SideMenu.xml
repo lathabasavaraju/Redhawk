@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<menu>
+  <group Text="Inbound">
+    <item Text="XML" />
+  </group>
+  <group Text="OutBound">
+    <item Text="XML" />
+  </group>
+  <group Text="FeedConverter">
+    <item Text="LoadXML" />
+    <item Text="SaveInboundXML" />
+  </group>
+</menu>

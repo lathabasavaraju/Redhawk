@@ -1,0 +1,13 @@
+﻿@model System.Collections.IEnumerable
+<script>
+     function CustomButtonClick(s, e) {
+         if (e.buttonID == 'btnGetKey') {
+             var key = s.GetRowKey(e.visibleIndex);
+            // alert("Key Value is " + key);
+             // callbackData = { command: "ADD", parameter: e.visibleIndex };
+             pageControlCallback.PerformCallback({ command: 'ADD', parameter: key });
+         }
+     }
+</script>
+@Html.Action("PageControlPartial",Model)
+
