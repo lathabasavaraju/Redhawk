@@ -1,0 +1,6 @@
+C:\Users\lbasavaraju\source\repos\RedHawk\RedHawk.Model\bin\Release\RedHawk.Model.dll
+C:\Users\lbasavaraju\source\repos\RedHawk\RedHawk.Model\bin\Release\RedHawk.Model.pdb
+C:\Users\lbasavaraju\source\repos\RedHawk\RedHawk.Model\obj\Release\RedHawk.Model.csprojResolveAssemblyReference.cache
+C:\Users\lbasavaraju\source\repos\RedHawk\RedHawk.Model\obj\Release\RedHawk.Model.csproj.CoreCompileInputs.cache
+C:\Users\lbasavaraju\source\repos\RedHawk\RedHawk.Model\obj\Release\RedHawk.Model.dll
+C:\Users\lbasavaraju\source\repos\RedHawk\RedHawk.Model\obj\Release\RedHawk.Model.pdb

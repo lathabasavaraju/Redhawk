@@ -1,0 +1,15 @@
+C:\Users\lbasavaraju\source\repos\RedHawk\RedHawk.Service\bin\Debug\netcoreapp2.0\RedHawk.Service.deps.json
+C:\Users\lbasavaraju\source\repos\RedHawk\RedHawk.Service\bin\Debug\netcoreapp2.0\RedHawk.Service.runtimeconfig.json
+C:\Users\lbasavaraju\source\repos\RedHawk\RedHawk.Service\bin\Debug\netcoreapp2.0\RedHawk.Service.runtimeconfig.dev.json
+C:\Users\lbasavaraju\source\repos\RedHawk\RedHawk.Service\bin\Debug\netcoreapp2.0\RedHawk.Service.dll
+C:\Users\lbasavaraju\source\repos\RedHawk\RedHawk.Service\bin\Debug\netcoreapp2.0\RedHawk.Service.pdb
+C:\Users\lbasavaraju\source\repos\RedHawk\RedHawk.Service\bin\Debug\netcoreapp2.0\RedHawk.Model.dll
+C:\Users\lbasavaraju\source\repos\RedHawk\RedHawk.Service\bin\Debug\netcoreapp2.0\System.Web.Http.dll
+C:\Users\lbasavaraju\source\repos\RedHawk\RedHawk.Service\bin\Debug\netcoreapp2.0\System.Net.Http.Formatting.dll
+C:\Users\lbasavaraju\source\repos\RedHawk\RedHawk.Service\bin\Debug\netcoreapp2.0\RedHawk.Model.pdb
+C:\Users\lbasavaraju\source\repos\RedHawk\RedHawk.Service\obj\Debug\netcoreapp2.0\RedHawk.Service.csproj.CoreCompileInputs.cache
+C:\Users\lbasavaraju\source\repos\RedHawk\RedHawk.Service\obj\Debug\netcoreapp2.0\RedHawk.Service.AssemblyInfoInputs.cache
+C:\Users\lbasavaraju\source\repos\RedHawk\RedHawk.Service\obj\Debug\netcoreapp2.0\RedHawk.Service.AssemblyInfo.cs
+C:\Users\lbasavaraju\source\repos\RedHawk\RedHawk.Service\obj\Debug\netcoreapp2.0\RedHawk.Service.csproj.CopyComplete
+C:\Users\lbasavaraju\source\repos\RedHawk\RedHawk.Service\obj\Debug\netcoreapp2.0\RedHawk.Service.dll
+C:\Users\lbasavaraju\source\repos\RedHawk\RedHawk.Service\obj\Debug\netcoreapp2.0\RedHawk.Service.pdb
