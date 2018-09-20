@@ -8,3 +8,9 @@ C:\Users\lbasavaraju\Documents\Visual Studio 2015\Projects\Website\RedHawk.Model
 C:\Users\lbasavaraju\Documents\Visual Studio 2015\Projects\Website\RedHawk.Model\obj\Debug\RedHawk.Model.csproj.CoreCompileInputs.cache
 C:\Users\lbasavaraju\Documents\Visual Studio 2015\Projects\Website\RedHawk.Model\obj\Debug\RedHawk.Model.dll
 C:\Users\lbasavaraju\Documents\Visual Studio 2015\Projects\Website\RedHawk.Model\obj\Debug\RedHawk.Model.pdb
+C:\Users\lbasavaraju\source\repos\RedHawk\RedHawk.Model\obj\Debug\RedHawk.Model.csprojResolveAssemblyReference.cache
+C:\Users\lbasavaraju\source\repos\RedHawk\RedHawk.Model\obj\Debug\RedHawk.Model.csproj.CoreCompileInputs.cache
+C:\Users\lbasavaraju\source\repos\RedHawk\RedHawk.Model\obj\Debug\RedHawk.Model.dll
+C:\Users\lbasavaraju\source\repos\RedHawk\RedHawk.Model\obj\Debug\RedHawk.Model.pdb
+C:\Users\lbasavaraju\source\repos\RedHawk\RedHawk.Model\bin\Debug\RedHawk.Model.dll
+C:\Users\lbasavaraju\source\repos\RedHawk\RedHawk.Model\bin\Debug\RedHawk.Model.pdb

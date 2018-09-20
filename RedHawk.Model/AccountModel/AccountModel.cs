@@ -32,7 +32,7 @@ namespace RedHawk.Model.AccountModel
         public string Password { get; set; }
 
         bool? rememberMe;
-
+        public bool IsAuthenticated { get; set; }
 
         [Display(Name = "Remember me?")]
         public bool? RememberMe
