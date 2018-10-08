@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using RedHawk.Model.AccountModel;
 
 namespace RedHawk.Model.InboundModel
 {
@@ -18,7 +19,7 @@ namespace RedHawk.Model.InboundModel
         public string PolicyExpirationDate { get; set; }
         public string PolicyEffectiveDate { get; set; }
         public InboundXmlViewModel.Policy_transaction_group InboundXml { get; set; }
-
+        public  string InboundXMLString { get; set; }
     }
     public class InboundEditModel
     {
