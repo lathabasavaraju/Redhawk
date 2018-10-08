@@ -187,6 +187,31 @@ namespace RedHawk.Service.DataAccessLayer
             return loginList;
         }
 
+        public int ValidateRedHawkToken(string strRedHawkToken)
+        {
+            int result = 0;
+
+            try
+            {
+                using (SqlConnection con = new SqlConnection(sqlConnectionString))
+                {
+                    SqlCommand cmd = new SqlCommand("assp_RedHawkTokenVerification", con)
+                    {
+                        CommandType = CommandType.StoredProcedure
+                    };
+
+                    cmd.Parameters.AddWithValue("@usertable_id", Convert.ToInt32(strRedHawkToken));
+                    con.Open();
+                    result = cmd.ExecuteNonQuery();
+                    con.Close();
+                }
+            }
+            catch
+            {
+                throw;
+            }
+            return result;
+        }
         public int DeleteUser(int id)
         {
             try

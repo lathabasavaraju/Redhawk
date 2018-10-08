@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Mvc;
+using RedHawk.Model.AccountModel;
 using RedHawk.Model.InboundModel;
 using RedHawk.Service.DataAccessLayer;
 using System.Collections.Generic;
@@ -14,23 +16,35 @@ namespace RedHawk.Service.Controllers
         [Microsoft.AspNetCore.Mvc.Route("api/[controller]")]
         [Microsoft.AspNetCore.Mvc.HttpGet]
         [Microsoft.AspNetCore.Mvc.ActionName("GetAllInboundXml")]
-        public IEnumerable<InboundModel> GetAllInboundXml()
+        public IEnumerable<InboundModel> GetAllInboundXml([FromHeader]string redHawkTokenUsername,[FromHeader]string redHawkTokenPassword)
         {
-            return inboundDAL.GetInboundXml();
+
+            AccountController accountController = new AccountController();
+            var validUser = accountController.ValidateRedHawkToken(redHawkTokenUsername,redHawkTokenPassword);
+            if (validUser)
+                return inboundDAL.GetInboundXml();
+            else
+                return null;
         }
 
         [Microsoft.AspNetCore.Mvc.Route("api/[controller]/Update")]
-        public string UpateInboundXML([Microsoft.AspNetCore.Mvc.FromBody]InboundModel inboundModel)
+        public string UpateInboundXML([Microsoft.AspNetCore.Mvc.FromBody]InboundModel inboundModel, [FromHeader]string redHawkTokenUsername, [FromHeader]string redHawkTokenPassword)
         {
             string editedInboundXMlString = string.Empty;
             int actionResult = 0;
-            if (inboundModel != null)
+            AccountController accountController = new AccountController();
+            var validUser = accountController.ValidateRedHawkToken(redHawkTokenUsername, redHawkTokenPassword);
+
+            if (validUser)
             {
-                var stringwriter = new System.IO.StringWriter();
-                var serializer = new XmlSerializer(typeof(InboundXmlViewModel.Policy_transaction_group));
-                serializer.Serialize(stringwriter, inboundModel.InboundXml);
-                editedInboundXMlString = stringwriter.ToString();
-                actionResult = inboundDAL.UpdateInboundXML(inboundModel.CeaXmlId, editedInboundXMlString, inboundModel.ProcessingStatus);
+                if (inboundModel != null)
+                {
+                    var stringwriter = new System.IO.StringWriter();
+                    var serializer = new XmlSerializer(typeof(InboundXmlViewModel.Policy_transaction_group));
+                    serializer.Serialize(stringwriter, inboundModel.InboundXml);
+                    editedInboundXMlString = stringwriter.ToString();
+                    actionResult = inboundDAL.UpdateInboundXML(inboundModel.CeaXmlId, editedInboundXMlString, inboundModel.ProcessingStatus);
+                }
             }
             if (actionResult == 0)
                 return "0";
@@ -39,9 +53,17 @@ namespace RedHawk.Service.Controllers
         }
 
         [Microsoft.AspNetCore.Mvc.Route("api/[controller]/Edit")]
-        public InboundEditModel GetInboundEditXml(int ceaXmlId)
+        public InboundEditModel GetInboundEditXml(int ceaXmlId, [FromHeader]string redHawkTokenUsername, [FromHeader]string redHawkTokenPassword)
         {
-            return inboundDAL.GetInboundXmlEditData(ceaXmlId);
+            AccountController accountController = new AccountController();
+            var validUser = accountController.ValidateRedHawkToken(redHawkTokenUsername, redHawkTokenPassword);
+
+            if (validUser)
+            {
+                return inboundDAL.GetInboundXmlEditData(ceaXmlId);
+            }
+            else
+                return null;
         }
     }
 }

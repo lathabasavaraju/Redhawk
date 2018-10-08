@@ -13,3 +13,4 @@ C:\Users\lbasavaraju\source\repos\RedHawk\RedHawk.Service\obj\Debug\netcoreapp2.
 C:\Users\lbasavaraju\source\repos\RedHawk\RedHawk.Service\obj\Debug\netcoreapp2.0\RedHawk.Service.csproj.CopyComplete
 C:\Users\lbasavaraju\source\repos\RedHawk\RedHawk.Service\obj\Debug\netcoreapp2.0\RedHawk.Service.dll
 C:\Users\lbasavaraju\source\repos\RedHawk\RedHawk.Service\obj\Debug\netcoreapp2.0\RedHawk.Service.pdb
+C:\Users\lbasavaraju\source\repos\RedHawk\RedHawk.Service\obj\Debug\netcoreapp2.0\RedHawk.Service.csprojResolveAssemblyReference.cache
