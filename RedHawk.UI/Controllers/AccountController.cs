@@ -16,6 +16,8 @@ using System.Text;
 using System.Net;
 using RedHawk.Model.AccountModel;
 using System.IO;
+using RedHawk.UI.Common;
+using RedHawk.Model.Common;
 
 namespace RedHawk.UI.Controllers
 {
@@ -38,37 +40,50 @@ namespace RedHawk.UI.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Login(LoginModel model, string returnUrl)
+        public async Task<ActionResult> Login(LoginModel loginModel, string returnUrl)
         {
+            RedHawkToken redHawkToken = new RedHawkToken();
+            EncryptDecrypt encryptDecrypt = new EncryptDecrypt();
             if (ModelState.IsValid)
             {
                 // This doesn't count login failures towards account lockout
                 // To enable password failures to trigger account lockout, change to shouldLockout: true
-
-                var result = await ValidateLogin(model);
-                switch (result)
+                if (loginModel != null)
                 {
-                    case SignInStatus.Success:
+                    ServiceAuthentication serviceAuthentication = new ServiceAuthentication();
+                    redHawkToken = serviceAuthentication.GetRedHawkServiceToken(loginModel);
+                    Session["RedHawkToken"] = redHawkToken;
+                    if (redHawkToken.IsAuthenticated)
+                    {
+                        var result = await ValidateLogin(loginModel);
+                        switch (result)
                         {
-                            return RedirectToAction("Index", "Home");
+                            case SignInStatus.Success:
+                                {
+                                    return RedirectToAction("Index", "Home");
+                                }
+                            case SignInStatus.LockedOut:
+                                return View("Lockout");
+                            case SignInStatus.RequiresVerification:
+                                return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = loginModel.RememberMe });
+                            case SignInStatus.Failure:
+                            default:
+                                ViewBag.ErrorMessage = "The user name or password provided is incorrect";
+                                return View(loginModel);
                         }
-                    case SignInStatus.LockedOut:
-                        return View("Lockout");
-                    case SignInStatus.RequiresVerification:
-                        return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
-                    case SignInStatus.Failure:
-                    default:
+                    }
+                    else
                         ViewBag.ErrorMessage = "The user name or password provided is incorrect";
-                        return View(model);
                 }
             }
 
             // If we got this far, something failed, redisplay form
-            return View(model);
+            return View(loginModel);
         }
 
-        public async Task<SignInStatus> ValidateLogin(LoginModel model)
+        private async Task<SignInStatus> ValidateLogin(LoginModel model)
         {
+
             SignInStatus res = SignInStatus.Failure;
             using (var client = new HttpClient())
             {
@@ -109,14 +124,17 @@ namespace RedHawk.UI.Controllers
             }
         }
 
-        //
-        // GET: /Account/LogOff
+     
+        #region Logoff
 
+        // GET: /Account/LogOff
+        //
         public ActionResult LogOff()
         {
 
             return Redirect("/");
         }
+        #endregion
 
         //
         //// GET: /Account/Register

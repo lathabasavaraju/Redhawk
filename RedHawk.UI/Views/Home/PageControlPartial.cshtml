@@ -5,6 +5,7 @@
     List<InboundModel> InboundModelList = Session["TabData"] != null ? (List<InboundModel>)Session["TabData"] : new List<InboundModel>();
 
 }
+
 @Html.DevExpress().CallbackPanel(settings =>
 {
     settings.Name = "pageControlCallback";
@@ -19,7 +20,6 @@
         Html.DevExpress().PageControl(pageControlSettings =>
         {
             pageControlSettings.Name = "pageControl";
-
 
             pageControlSettings.TabPages.Clear();
             pageControlSettings.TabPages.Add(tabPagePartialView =>
@@ -36,18 +36,12 @@
 
             foreach (InboundModel info in InboundModelList)
             {
-                MVCxTabPage page = pageControlSettings.TabPages.Add(Convert.ToString(info.CompanionPolicyNumber), Convert.ToString(info.CompanionPolicyNumber));
+                MVCxTabPage page = pageControlSettings.TabPages.Add(Convert.ToString(info.CompanionPolicyNumber), Convert.ToString(info.TransactionType));
                 page.SetContent(() =>
                 {
+                    pageControlSettings.Name = "pageControl"+info.CeaXmlId;
 
                     Html.RenderAction("TabPartial", info);
-
-                    ViewContext.Writer.Write(
-                            "<div style=\"text-align: right; padding: 2px 2px 2px 2px\">" +
-                                string.Format("<a href=\"#\" onclick=\"{0}.UpdateEdit()\">Update</a>&nbsp;", settings.Name) +
-                                string.Format("<a href=\"#\" onclick=\"{0}.CancelEdit()\">Cancel</a>", settings.Name) +
-                            "</div>"
-                        );
 
                 });
 

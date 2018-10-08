@@ -11,6 +11,7 @@ using RedHawk.Model.InboundModel;
 using System.Xml.Serialization;
 using System.IO;
 using System.Collections;
+using RedHawk.Model.AccountModel;
 
 namespace RedHawk.UI.Controllers
 {
@@ -25,67 +26,129 @@ namespace RedHawk.UI.Controllers
             TempData["IsValidLogin"] = true;
             TempData["Username"] = MvcApplication.Username;
             staticInboundModelList = await GetInboundXMLData();
-            var Model = staticInboundModelList;
-            return View(Model);
+            if (staticInboundModelList.Count > 0)
+            {
+                var Model = staticInboundModelList;
+                return View(Model);
+            }
+            else
+                return RedirectToAction("Login", "Account");
+
         }
 
 
         public async Task<List<InboundModel>> GetInboundXMLData()
         {
+            RedHawkToken redHawkToken = new RedHawkToken();
             List<InboundModel> iboundModelListTemp = new List<InboundModel>();
+            if (Session["RedHawkToken"] != null)
+               redHawkToken  = (RedHawkToken)Session["RedHawkToken"];
 
-            using (var client = new HttpClient())
+            if (redHawkToken.IsAuthenticated)
             {
-                //Passing service base url  
-                client.BaseAddress = new Uri("http://localhost:65023/");
-
-                client.DefaultRequestHeaders.Clear();
-                //Define request data format  
-                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-
-                //Sending request to find web api REST service resource GetAllInboundXml using HttpClient  
-                HttpResponseMessage Res = await client.GetAsync("api/Inbound/");
-
-                //Checking the response is successful or not which is sent using HttpClient  
-                if (Res.IsSuccessStatusCode)
+                using (var client = new HttpClient())
                 {
-                    //Storing the response details recieved from web api   
-                    var InboundInfo = Res.Content.ReadAsStringAsync().Result;
+                    //Passing service base url  
+                    client.BaseAddress = new Uri("http://localhost:65023/");
 
-                    //Deserializing the response recieved from web api and storing into the inbound list  
-                    iboundModelListTemp = JsonConvert.DeserializeObject<List<InboundModel>>(InboundInfo);
+                    client.DefaultRequestHeaders.Clear();
+
+                    //Define request data format  
+                    client.DefaultRequestHeaders.Add("redHawkTokenUsername", redHawkToken.UserName);
+                    client.DefaultRequestHeaders.Add("redHawkTokenPassword", redHawkToken.Password);
+
+                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                    //Sending request to find web api REST service resource GetAllInboundXml using HttpClient  
+                    HttpResponseMessage Res = await client.GetAsync("api/Inbound/");
+
+                    //Checking the response is successful or not which is sent using HttpClient  
+                    if (Res.IsSuccessStatusCode)
+                    {
+                        //Storing the response details recieved from web api   
+                        var InboundInfo = Res.Content.ReadAsStringAsync().Result;
+
+                        //Deserializing the response recieved from web api and storing into the inbound list  
+                        iboundModelListTemp = JsonConvert.DeserializeObject<List<InboundModel>>(InboundInfo);
+
+                    }
+                }
+            }
+            //returning the Inbound list to view  
+            return iboundModelListTemp.ToList();
+
+
+        }
+
+        public async Task<string> GetInboundXMLStringToEditData(int ceaXmlId)
+        {
+            InboundEditModel inboundEditModel = new InboundEditModel();
+            RedHawkToken redHawkToken = new RedHawkToken();
+            if (Session["RedHawkToken"] != null)
+                redHawkToken = (RedHawkToken)Session["RedHawkToken"];
+
+            if (redHawkToken.IsAuthenticated)
+            {
+                using (var client = new HttpClient())
+                {
+
+                    client.DefaultRequestHeaders.Clear();
+                    client.DefaultRequestHeaders.Add("redHawkTokenUsername", redHawkToken.UserName);
+                    client.DefaultRequestHeaders.Add("redHawkTokenPassword", redHawkToken.Password);
+                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                    var response = await client.GetAsync(string.Format("http://localhost:65023/api//Inbound/Edit?ceaXmlId={0}", ceaXmlId));
+                    if (response.IsSuccessStatusCode)
+                    {
+                        inboundEditModel = await response.Content.ReadAsAsync<InboundEditModel>();
+
+                    }
+                    else
+                        inboundEditModel.InboundXml = null;
 
                 }
-                //returning the Inbound list to view  
-
-                return iboundModelListTemp.ToList();
             }
+            else
+                return null;
+
+            return inboundEditModel.InboundXml;
+
         }
 
         public async Task<InboundXmlViewModel.Policy_transaction_group> GetInboundXMLToEditData(int ceaXmlId)
         {
             InboundXmlViewModel.Policy_transaction_group policyTransactionGroup = new InboundXmlViewModel.Policy_transaction_group();
+            RedHawkToken redHawkToken = new RedHawkToken();
+            if (Session["RedHawkToken"] != null)
+                redHawkToken = (RedHawkToken)Session["RedHawkToken"];
 
-            using (var client = new HttpClient())
+            if (redHawkToken.IsAuthenticated)
             {
-
-                client.DefaultRequestHeaders.Clear();
-                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                var response = await client.GetAsync(string.Format("http://localhost:65023/api//Inbound/Edit?ceaXmlId={0}", ceaXmlId));
-                if (response.IsSuccessStatusCode)
+                using (var client = new HttpClient())
                 {
-                    InboundEditModel inboundEditModel = await response.Content.ReadAsAsync<InboundEditModel>();
-                    var serializer = new XmlSerializer(typeof(InboundXmlViewModel.Policy_transaction_group));
 
-                    using (TextReader reader = new StringReader(inboundEditModel.InboundXml))
+                    client.DefaultRequestHeaders.Clear();
+                    client.DefaultRequestHeaders.Add("redHawkTokenUsername", redHawkToken.UserName);
+                    client.DefaultRequestHeaders.Add("redHawkTokenPassword", redHawkToken.Password);
+                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                    var response = await client.GetAsync(string.Format("http://localhost:65023/api//Inbound/Edit?ceaXmlId={0}", ceaXmlId));
+                    if (response.IsSuccessStatusCode)
                     {
-                        policyTransactionGroup = (InboundXmlViewModel.Policy_transaction_group)serializer.Deserialize(reader);
+                        InboundEditModel inboundEditModel = await response.Content.ReadAsAsync<InboundEditModel>();
+                        var serializer = new XmlSerializer(typeof(InboundXmlViewModel.Policy_transaction_group));
+
+                        using (TextReader reader = new StringReader(inboundEditModel.InboundXml))
+                        {
+                            policyTransactionGroup = (InboundXmlViewModel.Policy_transaction_group)serializer.Deserialize(reader);
+                        }
+
                     }
 
                 }
-
-                return policyTransactionGroup;
             }
+            else
+                policyTransactionGroup = null;
+            return policyTransactionGroup;
+
         }
 
         [ValidateInput(false)]
@@ -120,16 +183,20 @@ namespace RedHawk.UI.Controllers
                         if (inboundModel.CeaXmlId == parameter)
                             if (inboundModelList.Count == 0)
                             {
-                                inboundModel.InboundXml = await GetInboundXMLToEditData(parameter);
-                                inboundModelList.Add(inboundModel);
+
+                                inboundModel.InboundXMLString = await GetInboundXMLStringToEditData(parameter);
+                                if (inboundModel != null)
+                                  inboundModelList.Add(inboundModel);
+
                             }
                             else
                             {
                                 bool hasCeaXmlId = inboundModelList.Any(id => id.CeaXmlId == parameter);
                                 if (!hasCeaXmlId)
                                 {
-                                    inboundModel.InboundXml = await GetInboundXMLToEditData(parameter);
-                                    inboundModelList.Add(inboundModel);
+                                    inboundModel.InboundXMLString = await GetInboundXMLStringToEditData(parameter);
+                                    if (inboundModel != null)
+                                        inboundModelList.Add(inboundModel);
                                 }
 
                             }
@@ -162,24 +229,36 @@ namespace RedHawk.UI.Controllers
         public async Task<ActionResult> UpdatedInboundXMl(InboundModel inboundModel)
         {
             List<InboundModel> inboundModelListTemp = new List<InboundModel>();
-            inboundModelListTemp = ((List<InboundModel>)Session["TabData"]) ?? new List<InboundModel>(); ;
+            inboundModelListTemp = ((List<InboundModel>)Session["TabData"]) ?? new List<InboundModel>();
+            RedHawkToken redHawkToken = new RedHawkToken();
+            if (Session["RedHawkToken"] != null)
+                redHawkToken = (RedHawkToken)Session["RedHawkToken"];
 
-            using (var client = new HttpClient())
+            if (redHawkToken.IsAuthenticated)
             {
-                //Sending request to find web api REST service resource UpateInboundXML using HttpClient  
-                client.DefaultRequestHeaders.Clear();
-                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-               // var result = await client.PostAsJsonAsync("http://localhost:65023/api/Inbound/Update", inboundModel);
-                var result = await client.PostAsJsonAsync<InboundModel>("http://localhost:65023/api/Inbound/Update", inboundModel);
-
-                //Checking the response is successful or not which is sent using HttpClient  
-                if (result.IsSuccessStatusCode)
+                using (var client = new HttpClient())
                 {
-                    inboundModelListTemp.RemoveAll(info => info.CeaXmlId == inboundModel.CeaXmlId);
-                    Session["TabData"] = inboundModelListTemp;
-                }
+                    //Sending request to find web api REST service resource UpateInboundXML using HttpClient  
+                    client.DefaultRequestHeaders.Clear();
+                    client.DefaultRequestHeaders.Add("redHawkTokenUsername", redHawkToken.UserName);
+                    client.DefaultRequestHeaders.Add("redHawkTokenPassword", redHawkToken.Password);
+                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                    // var result = await client.PostAsJsonAsync("http://localhost:65023/api/Inbound/Update", inboundModel);
+                    var result = await client.PostAsJsonAsync<InboundModel>("http://localhost:65023/api/Inbound/Update", inboundModel);
 
+                    //Checking the response is successful or not which is sent using HttpClient  
+                    if (result.IsSuccessStatusCode)
+                    {
+                        inboundModelListTemp.RemoveAll(info => info.CeaXmlId == inboundModel.CeaXmlId);
+                        Session["TabData"] = inboundModelListTemp;
+                    }
+
+                }
             }
+            else
+                return RedirectToAction("Login", "Account");
+
+
             return RedirectToAction("Index", "Home");
         }
 

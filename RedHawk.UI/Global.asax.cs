@@ -1,6 +1,8 @@
+using RedHawk.UI.App_Start;
 using System;
 using System.Web.Http;
 using System.Web.Mvc;
+using System.Web.Optimization;
 using System.Web.Routing;
 
 namespace RedHawk.UI
@@ -18,7 +20,8 @@ namespace RedHawk.UI
             GlobalConfiguration.Configure(WebApiConfig.Register);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
-            
+            BundleConfig.RegisterBundles(BundleTable.Bundles);
+
             ModelBinders.Binders.DefaultBinder = new DevExpress.Web.Mvc.DevExpressEditorsBinder();
 
             DevExpress.Web.ASPxWebControl.CallbackError += Application_Error;

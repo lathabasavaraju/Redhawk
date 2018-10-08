@@ -25,12 +25,14 @@
              settings.SettingsPager.PageSizeItemSettings.Visible = true;
              settings.SettingsPager.PageSize = 5;
              settings.SettingsPager.PageSizeItemSettings.Items = new string[] { "5", "10", "50" };
-
+             settings.SettingsSearchPanel.Visible = true;
+             settings.SettingsSearchPanel.ColumnNames = "CompanionPolicyNumber";
+             settings.SettingsText.SearchPanelEditorNullText = "CompanionPolicyNumber";
 
 
              settings.SettingsPager.Visible = true;
              settings.Settings.ShowGroupPanel = true;
-             settings.Settings.ShowFilterRow = true;
+             settings.Settings.ShowFilterRow = false;
              settings.SettingsBehavior.AllowSelectByRowClick = true;
 
              settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.Off;

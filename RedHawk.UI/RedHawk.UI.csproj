@@ -178,6 +178,10 @@
       <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.3\lib\net45\System.Web.Mvc.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="System.Web.Optimization, Version=1.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Bin\System.Web.Optimization.dll</HintPath>
+    </Reference>
     <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.3\lib\net45\System.Web.Razor.dll</HintPath>
       <Private>True</Private>
@@ -216,10 +220,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_Data\NWind.mdf" />
-    <Content Include="App_Data\NWind_log.ldf">
-      <DependentUpon>NWind.mdf</DependentUpon>
-    </Content>
     <Content Include="App_Data\SideMenu.xml" />
     <Content Include="App_Data\TopMenu.xml" />
     <Content Include="Content\Images\AquaHeader.jpg" />
@@ -230,6 +230,21 @@
     <Content Include="Content\jquery-ui.css" />
     <Content Include="Content\jquery-ui.min.css" />
     <Content Include="Content\Site.css" />
+    <Content Include="Content\xonomy-3.5.0\add.png" />
+    <Content Include="Content\xonomy-3.5.0\bin_closed.png" />
+    <Content Include="Content\xonomy-3.5.0\bullet_arrow_down.png" />
+    <Content Include="Content\xonomy-3.5.0\bullet_arrow_up.png" />
+    <Content Include="Content\xonomy-3.5.0\callout.gif" />
+    <Content Include="Content\xonomy-3.5.0\draghandle.gif" />
+    <Content Include="Content\xonomy-3.5.0\exclamation.png" />
+    <Content Include="Content\xonomy-3.5.0\loader.gif" />
+    <Content Include="Content\xonomy-3.5.0\magnifier.png" />
+    <Content Include="Content\xonomy-3.5.0\minus.gif" />
+    <Content Include="Content\xonomy-3.5.0\plus.gif" />
+    <Content Include="Content\xonomy-3.5.0\sitemap.png" />
+    <Content Include="Content\xonomy-3.5.0\tag.png" />
+    <Content Include="Content\xonomy-3.5.0\xonomy.css" />
+    <Content Include="Content\xonomy-3.5.0\xonomy.js" />
     <Content Include="Global.asax" />
     <Content Include="Scripts\ace.js" />
     <Content Include="Scripts\additional-methods.js" />
@@ -258,6 +273,9 @@
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Content\xonomy-3.5.0\LICENSE" />
+    <Content Include="Content\xonomy-3.5.0\README.md" />
+    <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
@@ -319,10 +337,12 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Common\ServiceAuthentication.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\OutboundController.cs" />
