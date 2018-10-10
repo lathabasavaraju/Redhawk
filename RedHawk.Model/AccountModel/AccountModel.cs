@@ -42,6 +42,16 @@ namespace RedHawk.Model.AccountModel
         }
 
     }
+
+    public class RedHawkToken
+    {
+        public string UserName { get; set; }
+
+        public string Password { get; set; }
+
+        public bool IsAuthenticated { get; set; }
+
+    }
     public class SendCodeViewModel
     {
         public string SelectedProvider { get; set; }

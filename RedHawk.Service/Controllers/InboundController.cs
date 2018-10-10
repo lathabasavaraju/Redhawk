@@ -9,27 +9,36 @@ namespace RedHawk.Service.Controllers
     public class InboundController : Controller
     {
         //Data Layer Object
+        AccountController accountController = new AccountController();
         InboundDAL inboundDAL = new InboundDAL();
+
         [Microsoft.AspNetCore.Mvc.Route("api/[controller]")]
         [Microsoft.AspNetCore.Mvc.HttpGet]
         [Microsoft.AspNetCore.Mvc.ActionName("GetAllInboundXml")]
-        public IEnumerable<InboundModel> GetAllInboundXml([FromHeader]string redHawkTokenUsername,[FromHeader]string redHawkTokenPassword)
+        public IEnumerable<InboundModel> GetAllInboundXml([FromHeader]string redHawkTokenUsername, [FromHeader]string redHawkTokenPassword)
         {
-
-            AccountController accountController = new AccountController();
-            var validUser = accountController.ValidateRedHawkToken(redHawkTokenUsername,redHawkTokenPassword);
+            var validUser = accountController.ValidateRedHawkToken(redHawkTokenUsername, redHawkTokenPassword);
             if (validUser)
                 return inboundDAL.GetInboundXml();
             else
                 return null;
         }
 
+        [Microsoft.AspNetCore.Mvc.Route("api/[controller]/Search")]
+        public IEnumerable<InboundModel> InboundSearch(InboundSearchModel inboundSearchModel, [FromHeader]string redHawkTokenUsername, [FromHeader]string redHawkTokenPassword)
+        {
+            var validUser = accountController.ValidateRedHawkToken(redHawkTokenUsername, redHawkTokenPassword);
+            if (validUser)
+                return inboundDAL.InboundSearch(inboundSearchModel);
+            else
+                return null;
+
+        }
         [Microsoft.AspNetCore.Mvc.Route("api/[controller]/Update")]
         public string UpateInboundXML([Microsoft.AspNetCore.Mvc.FromBody]InboundModel inboundModel, [FromHeader]string redHawkTokenUsername, [FromHeader]string redHawkTokenPassword)
         {
             string editedInboundXMlString = string.Empty;
             int actionResult = 0;
-            AccountController accountController = new AccountController();
             var validUser = accountController.ValidateRedHawkToken(redHawkTokenUsername, redHawkTokenPassword);
 
             if (validUser)
@@ -52,7 +61,6 @@ namespace RedHawk.Service.Controllers
         [Microsoft.AspNetCore.Mvc.Route("api/[controller]/Edit")]
         public InboundEditModel GetInboundEditXml(int ceaXmlId, [FromHeader]string redHawkTokenUsername, [FromHeader]string redHawkTokenPassword)
         {
-            AccountController accountController = new AccountController();
             var validUser = accountController.ValidateRedHawkToken(redHawkTokenUsername, redHawkTokenPassword);
 
             if (validUser)

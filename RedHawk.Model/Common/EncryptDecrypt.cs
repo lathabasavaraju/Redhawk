@@ -54,4 +54,3 @@ namespace RedHawk.Model.Common
         }
     }
 }
-

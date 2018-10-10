@@ -50,7 +50,43 @@ namespace RedHawk.Service.DataAccessLayer
                 throw;
             }
         }
+        public IEnumerable<LoginModel> ValidateUser(LoginModel login)
+        {
+            List<LoginModel> loginList = new List<LoginModel>();
 
+            try
+            {
+                using (SqlConnection con = new SqlConnection(sqlConnectionString))
+                {
+                    SqlCommand cmd = new SqlCommand("assp_UserCredentailsVerification", con)
+                    {
+                        CommandType = CommandType.StoredProcedure
+                    };
+
+                    cmd.Parameters.AddWithValue("@username", login.UserName);
+                    cmd.Parameters.AddWithValue("@password", login.Password);
+                    con.Open();
+                    SqlDataReader rdr = cmd.ExecuteReader();
+                    while (rdr.Read())
+                    {
+                        LoginModel loginObj = new LoginModel
+                        {
+                            UserName = rdr["user_name"].ToString(),
+                            Password = rdr["password"].ToString(),
+                            RememberMe = false
+                        };
+
+                        loginList.Add(loginObj);
+                    }
+                    con.Close();
+                }
+            }
+            catch
+            {
+                throw;
+            }
+            return loginList;
+        }
         public int AddUser(User user)
         {
             try
@@ -149,69 +185,6 @@ namespace RedHawk.Service.DataAccessLayer
             }
         }
 
-        public IEnumerable<LoginModel> ValidateUser(LoginModel login)
-        {
-            List<LoginModel> loginList = new List<LoginModel>();
-
-            try
-            {
-                using (SqlConnection con = new SqlConnection(sqlConnectionString))
-                {
-                    SqlCommand cmd = new SqlCommand("assp_UserCredentailsVerification", con)
-                    {
-                        CommandType = CommandType.StoredProcedure
-                    };
-
-                    cmd.Parameters.AddWithValue("@username", login.UserName);
-                    cmd.Parameters.AddWithValue("@password", login.Password);
-                    con.Open();
-                    SqlDataReader rdr = cmd.ExecuteReader();
-                    while (rdr.Read())
-                    {
-                        LoginModel loginObj = new LoginModel
-                        {
-                            UserName = rdr["user_name"].ToString(),
-                            Password = rdr["password"].ToString(),
-                            RememberMe = false
-                        };
-
-                        loginList.Add(loginObj);
-                    }
-                    con.Close();
-                }
-            }
-            catch
-            {
-                throw;
-            }
-            return loginList;
-        }
-
-        public int ValidateRedHawkToken(string strRedHawkToken)
-        {
-            int result = 0;
-
-            try
-            {
-                using (SqlConnection con = new SqlConnection(sqlConnectionString))
-                {
-                    SqlCommand cmd = new SqlCommand("assp_RedHawkTokenVerification", con)
-                    {
-                        CommandType = CommandType.StoredProcedure
-                    };
-
-                    cmd.Parameters.AddWithValue("@usertable_id", Convert.ToInt32(strRedHawkToken));
-                    con.Open();
-                    result = cmd.ExecuteNonQuery();
-                    con.Close();
-                }
-            }
-            catch
-            {
-                throw;
-            }
-            return result;
-        }
         public int DeleteUser(int id)
         {
             try
