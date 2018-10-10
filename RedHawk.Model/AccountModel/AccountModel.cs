@@ -144,3 +144,10 @@ namespace RedHawk.Model.AccountModel
         public string ConfirmPassword { get; set; }
     }
 }
+
+public class RedHawkToken
+{
+    public string UserName { get; set; }
+    public string Password { get; set; }
+    public bool IsAuthenticated { get; set; }
+}

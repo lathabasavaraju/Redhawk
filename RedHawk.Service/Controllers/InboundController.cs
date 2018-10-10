@@ -1,10 +1,7 @@
-﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Mvc;
-using RedHawk.Model.AccountModel;
+﻿using Microsoft.AspNetCore.Mvc;
 using RedHawk.Model.InboundModel;
 using RedHawk.Service.DataAccessLayer;
 using System.Collections.Generic;
-using System.Web.Http;
 using System.Xml.Serialization;
 
 namespace RedHawk.Service.Controllers

@@ -46,6 +46,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AccountModel\AccountModel.cs" />
+    <Compile Include="Common\EncryptDecrypt.cs" />
     <Compile Include="InboundModel\Inbound.cs" />
     <Compile Include="InboundModel\InboundXmlViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
