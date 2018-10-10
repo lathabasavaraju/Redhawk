@@ -14,10 +14,7 @@ namespace RedHawk.API.Controllers
         AccountController accountController = new AccountController();
         InboundDAL inboundDAL = new InboundDAL();
 
-        [Route("api/[controller]")]
-        [HttpGet]
-        [ActionName("GetAllInboundXml")]
-        public IEnumerable<InboundModel> GetAllInboundXml()
+        public IEnumerable<InboundModel> Get()
         {
             string redHawkTokenUsername = Request.Headers.GetValues("redHawkTokenUsername").First();
             string redHawkTokenPassword = Request.Headers.GetValues("redHawkTokenPassword").First();
@@ -29,8 +26,7 @@ namespace RedHawk.API.Controllers
                 return null;
         }
 
-        [Route("api/[controller]/Search")]
-        public IEnumerable<InboundModel> InboundSearch(InboundSearchModel inboundSearchModel)
+        public IEnumerable<InboundModel> Search(InboundSearchModel inboundSearchModel)
         {
             string redHawkTokenUsername = Request.Headers.GetValues("redHawkTokenUsername").First();
             string redHawkTokenPassword = Request.Headers.GetValues("redHawkTokenPassword").First();
@@ -42,8 +38,9 @@ namespace RedHawk.API.Controllers
                 return null;
 
         }
-        [Route("api/[controller]/Update")]
-        public string UpateInboundXML([FromBody]InboundModel inboundModel)
+
+        [HttpPost]
+        public string Update([FromBody]InboundModel inboundModel)
         {
             string redHawkTokenUsername = Request.Headers.GetValues("redHawkTokenUsername").First();
             string redHawkTokenPassword = Request.Headers.GetValues("redHawkTokenPassword").First();
@@ -69,8 +66,7 @@ namespace RedHawk.API.Controllers
                 return "1";
         }
 
-        [Route("api/[controller]/Edit")]
-        public InboundEditModel GetInboundEditXml(int ceaXmlId)
+        public InboundEditModel Edit(int ceaXmlId)
         {
             string redHawkTokenUsername = Request.Headers.GetValues("redHawkTokenUsername").First();
             string redHawkTokenPassword = Request.Headers.GetValues("redHawkTokenPassword").First();

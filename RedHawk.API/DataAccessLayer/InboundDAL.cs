@@ -5,12 +5,14 @@ using System.Threading.Tasks;
 using System.Data.SqlClient;
 using System.Data;
 using RedHawk.Model.InboundModel;
+using System.Configuration;
 
 namespace RedHawk.Service.DataAccessLayer
 {
     public class InboundDAL
     {
-        string sqlConnectionString = "Data Source=AL-SPAN-3;Initial Catalog = Redhawk; Integrated Security = True";
+        static readonly string sqlConnectionString =
+            ConfigurationManager.AppSettings["SQLServer"];
 
         public IEnumerable<InboundModel> GetInboundXml()
         {
