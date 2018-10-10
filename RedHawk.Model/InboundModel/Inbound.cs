@@ -28,5 +28,15 @@ namespace RedHawk.Model.InboundModel
         public string InboundXml { get; set; }
     }
 
+    public class InboundSearchModel
+    {
+        public int CompanyId { get; set; }
+        public int CeaXmlId { get; set; }
+        public string CompanionPolicyNumber { get; set; }
+        public string FileName { get; set; }
+        public string TransactionType { get; set; }
+        public string ProcessingStatus { get; set; }
+        public string FileDate { get; set; }
+    }
 
 }
