@@ -8,13 +8,11 @@
         var docSpec = {
 
         };
-
         var xml = $("#InboundXMLString").val();
         var ceaId = $("#CeaXmlId").val();
         console.log(ceaId);
-        var editor = document.getElementById("CeaXmlId");
+        var editor = document.getElementById(ceaId);
         Xonomy.render(xml, editor, docSpec);
-
 
     })
 
@@ -37,9 +35,8 @@
     </div>
     <div class="form-group">
         <div class="demo-container" style="border:1px solid #99d7ef; padding:20px;">
-            <input type="hidden" id="CeaXmlId" name="CeaXmlId" value="@Model.CeaXmlId" />
 
-            @*<div id="ceaXmlId" typeof="hidden"></div>*@
+            <div id="@Model.CeaXmlId" typeof="hidden"></div>
         </div>
     </div>
 
